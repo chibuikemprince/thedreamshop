@@ -6,7 +6,8 @@ function ShowProductModal(event) {
   const productId = event.target.dataset.productId;
 
   // Generate a 6-character product code
-  const productCode = generateProductCode(productId);
+  const productCode =
+    productId.length < 6 ? generateProductCode(productId) : productId;
 
   // Create the modal element
   const modal = document.createElement("div");

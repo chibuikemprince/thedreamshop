@@ -7,12 +7,12 @@ $output = '';
 if (isset($_POST["query"])) {
     $search = mysqli_real_escape_string($connect, $_POST["query"]);
     $query = "
-  SELECT p.pid,p.expiry_date,p.product_name,c.catagory_name,b.brand_name,p.product_price,p.product_stock,p.added_date,p.p_status FROM products p,brands b,catagories c WHERE p.bid = b.bid AND p.cid = c.cid AND product_name LIKE '%" . $search . "%'
+  SELECT p.pid,p.expiry_date,p.barcodeid, p.product_name,c.catagory_name,b.brand_name,p.product_price,p.product_stock,p.added_date,p.p_status FROM products p,brands b,catagories c WHERE p.bid = b.bid AND p.cid = c.cid AND product_name LIKE '%" . $search . "%'
 
  ";
 } else {
     $query = "
-  SELECT p.pid,p.expiry_date, p.product_name,c.catagory_name,b.brand_name,p.product_price,p.product_stock,p.added_date,p.p_status FROM products p,brands b,catagories c WHERE p.bid = b.bid AND p.cid = c.cid
+  SELECT p.pid,p.expiry_date,p.barcodeid, p.product_name,c.catagory_name,b.brand_name,p.product_price,p.product_stock,p.added_date,p.p_status FROM products p,brands b,catagories c WHERE p.bid = b.bid AND p.cid = c.cid
  ";
 }
 $result = mysqli_query($connect, $query);
@@ -45,6 +45,7 @@ if (mysqli_num_rows($result) > 0) {
                 <tbody>
                     <tr>
                         <td><?php echo ++$n; ?></td>
+                        
                         <td><?php echo "<a href='".DOMAIN."/product.php?pid=".$row["pid"]." '> ".$row["product_name"]."</a>"; ?></td>
                         <td><?php echo $row["catagory_name"]; ?></td>
                         <td><?php echo $row["brand_name"]; ?></td>
@@ -72,7 +73,7 @@ if (mysqli_num_rows($result) > 0) {
                         </td>
 
                          <td>
-                            <a href="#" data-toggle="modal"  class="btn btn-primary btn-sm edit_product" onclick="ShowProductModal(event)" data-product-id="<?php echo $row["pid"]; ?>"> Barcode</a>
+                            <a href="#" data-toggle="modal"  class="btn btn-primary btn-sm edit_product" onclick="ShowProductModal(event)" data-product-id="<?php echo $row["barcodeid"]?$row["barcodeid"]:   $row["pid"]; ?>"> Barcode</a>
                         </td>
                     </tr>
 

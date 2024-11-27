@@ -24,6 +24,11 @@
                              <label>Product Name</label>
                              <input type="text" class="form-control" name="product_name" id="product_name" placeholder="Enter Product Name" required>
                          </div>
+
+                         <div class="form-group col-md-6">
+                             <label>Barcode ID</label>
+                             <input type="text" class="form-control" name="barcodeid" id="barcodeid" placeholder="Enter Barcode ID" required>
+                         </div>
                      </div>
                      <div class="form-group">
                          <label>Category</label>

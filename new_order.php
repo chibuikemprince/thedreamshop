@@ -173,7 +173,38 @@ if (!isset($_SESSION["userid"])) {
     </div>
 
 
+<script>
+ window.addEventListener('load', function() {
+  var selectElement = document.getElementById('first-order-1');
 
+  // Check if the current URL has any query parameters
+  if (window.location.search) {
+    // Create a URLSearchParams object from the query string
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.has('barcodeid')) {
+      const barcodeId = urlParams.get('barcodeid');
+      console.log('Barcode ID:', barcodeId);
+
+      for (let i = 0; i < selectElement.options.length; i++) {
+        // Check if the current option has the 'barcodeid' attribute equal to the one in the URL
+        if (selectElement.options[i].getAttribute('barcodeid') === barcodeId) {
+          console.log("Match found");
+
+          // Select the option
+          selectElement.options[i].selected = true;
+          $(".pid").trigger("change");
+          break;
+        }
+      }
+    } else {
+      console.log('The URL does not have a "barcodeid" parameter.');
+    }
+  } else {
+    console.log('The current URL does not have any query parameters.');
+  }
+});
+    </script>
 </body>
 
 </html>

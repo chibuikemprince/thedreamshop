@@ -39,11 +39,12 @@ if ($result->num_rows > 0) {
     $expiryDate = $row['expiry_date'];
     $isExpired = ($expiryDate < $currentDate) ? true : false;
 
+    $code_bar = $row['barcodeid'] ? $row['barcodeid']   :generateProductCode($pid);
     // Display the product details
     echo "<div class='product-container'>";
     echo "<div class='product-image'>";
    //  $url = urlencode("http://localhost/TheDreamShop/product.php?pid=" . $pid );
-   echo "<img src='https://barcode.orcascan.com/?type=code128&data=".generateProductCode($pid)."' alt='" . $row['product_name'] . "'>";
+   echo "<img src='https://barcode.orcascan.com/?type=code128&data=".$code_bar ."' alt='" . $row['product_name'] . "'>";
     echo "</div>";
     echo "<div class='product-info'>";
     echo "<h1>" . $row['product_name'] . "</h1>";

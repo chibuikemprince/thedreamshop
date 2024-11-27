@@ -55,12 +55,13 @@
         }
     }
     //  add product
-  public function addproduct($cid, $bid, $pro_name, $price, $stock, $date, $exp)
+public function addproduct($cid, $bid, $pro_name, $price, $stock, $date, $exp, $barcodeid)
 {
-    $pre_stmt = $this->con->prepare("INSERT INTO `products`(`cid`, `bid`, `product_name`, `product_price`, `product_stock`, `added_date`, `p_status`, `expiry_date`) VALUES (?, ?, ?, ?, ?, ?, 1, ?)");
-    $pre_stmt->bind_param("iisdiss", $cid, $bid, $pro_name, $price, $stock, $date, $exp);
-    $result = $pre_stmt->execute();
+    $pre_stmt = $this->con->prepare("INSERT INTO `products`(`cid`, `bid`, `product_name`, `product_price`, `product_stock`, `added_date`, `p_status`, `expiry_date`, `barcodeid`) VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?)");
+    $p_status = 1; // Set the product status to 1 (active)
+    $result = $pre_stmt->bind_param("iisdisss", $cid, $bid, $pro_name, $price, $stock, $date, $exp, $barcodeid);
     if ($result) {
+        $pre_stmt->execute();
         return "Product_added";
     } else {
         return "Error_adding_Product";

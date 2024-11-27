@@ -251,7 +251,8 @@ ALTER TABLE products
 ADD expiry_date DATE DEFAULT CURRENT_DATE;
 
 
-
+ALTER TABLE products
+ADD COLUMN barcodeid VARCHAR(50);
 --
 -- Indexes for table `brands`
 --
