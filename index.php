@@ -43,7 +43,7 @@ if (isset($_SESSION["userid"])) { {
 		<?php
 		}
 		?>
-		<div class="card mx-auto" style="width: 20rem; .border: 2px solid black">
+		<div class="card mx-auto" style="width: 20rem; border: 2px solid black">
 			<!-- image add -->
 			<img class="card-img-top mx-auto" style="width:60%;" src="./images/download2.png" alt="Login Icon">
 			<div class="card-body">

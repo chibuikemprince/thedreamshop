@@ -21,6 +21,19 @@ if (!isset($_SESSION["userid"])) { {
 
     <!-- <link rel="stylesheet" type="text/css" href="./includes/style.css"> -->
     <script type="text/javascript" rel="stylesheet" src="./js/manage.js"></script>
+    <script type="text/javascript" rel="stylesheet" src="./js/modal.js"></script>
+<style>
+
+
+
+.barcode-container{
+
+padding-left: 150px;
+  
+}
+
+</style>
+
 </head>
 
 <body>

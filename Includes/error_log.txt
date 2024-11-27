@@ -1,0 +1,2 @@
+[2024-11-26 06:49:45] Error reading SQL file: project_inv.sql
+[2024-11-26 06:52:55] Error reading SQL file: ./project_inv.sql

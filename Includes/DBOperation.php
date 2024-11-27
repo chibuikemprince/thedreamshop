@@ -55,18 +55,17 @@
         }
     }
     //  add product
-    public function addproduct($cid, $bid , $pro_name , $price , $stock , $date )
-    {
-    $pre_stmt = $this->con->prepare("INSERT INTO `products`(`cid`, `bid`, `product_name`, `product_price`, `product_stock`, `added_date`, `p_status`) VALUES (?,?,?,?,?,?,?)");
-        $status = 1;
-        $pre_stmt->bind_param("iisdisi", $cid, $bid,$pro_name,$price,$stock,$date,$status);
-        $result = $pre_stmt->execute() or die($this->con->error);
-        if ($result) {
-            return "Product_added";
-        } else {
-            return "Error_adding_Product";
-        }
+  public function addproduct($cid, $bid, $pro_name, $price, $stock, $date, $exp)
+{
+    $pre_stmt = $this->con->prepare("INSERT INTO `products`(`cid`, `bid`, `product_name`, `product_price`, `product_stock`, `added_date`, `p_status`, `expiry_date`) VALUES (?, ?, ?, ?, ?, ?, 1, ?)");
+    $pre_stmt->bind_param("iisdiss", $cid, $bid, $pro_name, $price, $stock, $date, $exp);
+    $result = $pre_stmt->execute();
+    if ($result) {
+        return "Product_added";
+    } else {
+        return "Error_adding_Product";
     }
+}
 
  }
  //$ob = new DBOperation();

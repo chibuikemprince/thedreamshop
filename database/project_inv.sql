@@ -238,9 +238,19 @@ INSERT INTO `user` (`id`, `username`, `email`, `password`, `usertype`, `register
 (47, 'toma', 'toma1@gmail.com', '$2y$08$3kvfJ2Dl.s7pi4rfLOtUD.1fsPu78m.vt1g6f1mZ6q52cFpQO81/O', 'Admin', '2019-12-04', '2019-12-04 06:12:19', ''),
 (48, 'mumu', 'mumu@gmail.com', '$2y$08$6uhFXFrUDDLuNOAUR6qud.m8d1qxCVobsltg/tGs8O/Cgk4XYoUwO', 'Admin', '2019-12-04', '2019-12-04 09:12:45', '');
 
+
+
+INSERT INTO `user` (`id`, `username`, `email`, `password`, `usertype`, `register_date`, `last_login`, `notes`) VALUES (NULL, 'prince', 'admin@gmail.com', '$2y$08$3rGhcQ58J9VP8WnJmjDMheRW9hQH2IR6UYV55kbSCN7biXUl9uEOm', 'Admin', '2024-11-26', '2024-11-26 11:11:29', '')
+
 --
 -- Indexes for dumped tables
 --
+
+
+ALTER TABLE products
+ADD expiry_date DATE DEFAULT CURRENT_DATE;
+
+
 
 --
 -- Indexes for table `brands`

@@ -15,6 +15,11 @@
                              <label>Date</label>
                              <input type="text" class="form-control" name="added_date" id="added_date" value="<?php echo date("Y-m-d"); ?>" readonly />
                          </div>
+ <div class="form-group col-md-6">
+                             <label>Expiry Date</label>
+                             <input type="date" class="form-control" name="expiry_date" id="expiry_date" value="<?php echo date("Y-m-d"); ?>"   />
+                         </div>
+
                          <div class="form-group col-md-6">
                              <label>Product Name</label>
                              <input type="text" class="form-control" name="product_name" id="product_name" placeholder="Enter Product Name" required>

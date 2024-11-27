@@ -5,6 +5,6 @@ define("USER","root");
 define("PASS","");
 define("DB","project_inv");
 
-define("DOMAIN", "http://localhost:8080/IMS2");
+define("DOMAIN", "http://localhost/TheDreamShop");
 
 ?>
