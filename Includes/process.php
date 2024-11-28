@@ -4,6 +4,8 @@ include_once("user.php");
 include_once("DBOperation.php");
 include_once("manage.php");
 
+$conn = mysqli_connect("localhost", "root", "", "project_inv");
+
 
 //For Registration Processsing
 if (isset($_POST["username"]) and isset($_POST["email"])) {
@@ -342,7 +344,40 @@ if (isset($_POST["order_date"]) and isset($_POST["cust_name"])) {
 	$cust_name = $_POST["cust_name"];
 	$phone = $_POST["phone"];
 
+$products = $_POST['pid'];
+$qtys = $_POST['qty'];
 
+
+ 
+//echo "ggg";
+ 
+// echo $postData;
+// Assuming you have the following arrays:
+$ids = $products;
+$quantities = $qtys;
+
+// Start a transaction to ensure data integrity
+$conn->begin_transaction();
+
+try {
+    // Prepare the SQL statement
+    $stmt = $conn->prepare("UPDATE products SET product_stock = product_stock - ? WHERE pid = ?");
+
+    // Loop through the arrays and update the quantities
+    for ($i = 0; $i < count($ids); $i++) {
+        $stmt->bind_param("ii", $quantities[$i], $ids[$i]);
+        $stmt->execute();
+    }
+
+    // Commit the transaction
+    $conn->commit();
+} catch (Exception $e) {
+    // Rollback the transaction if there's an error
+    $conn->rollback();
+    echo "Error: " . $e->getMessage();
+}
+//die("Hi");
+//return;
 	//Now getting array from order_form
 	$ar_tqty = $_POST["tqty"];
 	$ar_qty = $_POST["qty"];
@@ -363,6 +398,8 @@ if (isset($_POST["order_date"]) and isset($_POST["cust_name"])) {
 
 	$m = new Manage();
 	echo $result = $m->storeCustomerOrderInvoice($orderdate,$cust_name,$phone, $ar_tqty, $ar_qty, $ar_price, $ar_pro_name, $sub_total, $Revenue, $net_total, $paid, $due, $payment_type, $profit);
+
+
 }
 // total sales
 if (isset($_POST["manageTSales"])) {

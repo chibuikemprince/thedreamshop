@@ -100,6 +100,31 @@ $(document).ready(function () {
 
   $("#order_form").click(function () {
     var invoice = $("#get_order_data").serialize();
+    // console.log({ data: $("#get_order_data").serialize() });
+    // return;
+
+    let myproductNamesClass = document.querySelectorAll(".order-name");
+    let myproductQtyClass = document.querySelectorAll(".qty");
+
+    let myproductNames = "";
+    let myproductQtys = "";
+
+    for (let i = 0; i < myproductNamesClass.length; i++) {
+      if (myproductNamesClass[i].value) {
+        myproductNames += myproductNamesClass[i].value + ", ";
+        myproductQtys += myproductQtyClass[i].value + ", ";
+      }
+    }
+
+    let formData = $("#get_order_data").serialize();
+    let additionalParams = {
+      products: myproductNames,
+      qtys: myproductQtys,
+    };
+    formData = $.extend(formData, additionalParams);
+    formData = $("#get_order_data").serialize();
+    //formData = DOMPurify.sanitize(formData);
+    console.log({ formData });
 
     if ($("#cust_name").val() === "") {
       alert("Please Enter Customer Name");
@@ -109,7 +134,8 @@ $(document).ready(function () {
       $.ajax({
         url: DOMAIN + "/includes/process.php",
         method: "POST",
-        data: $("#get_order_data").serialize(),
+        data: formData,
+
         success: function (data) {
           localStorage.setItem("cartItems", JSON.stringify([]));
 
@@ -256,9 +282,9 @@ $(document).ready(function () {
                 <table>
                     <thead>
                         <tr>
-                            <th>No.</th>
+                             
                             <th>Item Name</th>
-                            <th>Total Quantity</th>
+                             
                             <th>Quantity</th>
                             <th>Price</th>
                             <th>Total</th>
@@ -269,9 +295,9 @@ $(document).ready(function () {
                           .map(
                             (item) => `
                             <tr>
-                                <td>${item.no}</td>
+                                 
                                 <td>${item.itemName}</td>
-                                <td>${item.totalQuantity}</td>
+                                 
                                 <td>${item.quantity}</td>
                                 <td>${item.price}</td>
                                 <td>${item.total}</td>
@@ -289,10 +315,7 @@ $(document).ready(function () {
                         <th>Sub Total</th>
                         <td class="text-right">${subTotal}</td>
                     </tr>
-                    <tr>
-                        <th>Revenue %</th>
-                        <td class="text-right">${discount}</td>
-                    </tr>
+                    
                     <tr>
                         <th>Net Total</th>
                         <td class="text-right">${netTotal}</td>
@@ -301,14 +324,8 @@ $(document).ready(function () {
                         <th>Paid</th>
                         <td class="text-right">${paid}</td>
                     </tr>
-                    <tr>
-                        <th>Total Profit</th>
-                        <td class="text-right">${profit}</td>
-                    </tr>
-                    <tr>
-                        <th>Due</th>
-                        <td class="text-right">${due}</td>
-                    </tr>
+                    
+                    
                     <tr>
                         <th>Payment Method</th>
                         <td class="text-right">${paymentType}</td>

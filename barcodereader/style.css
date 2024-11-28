@@ -1,64 +1,62 @@
-/* General Styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
-}
-
-.container {
-  max-width: 800px;
-  margin: 0 auto;
   padding: 20px;
+  background-color: #f4f4f4;
 }
 
 h1 {
   text-align: center;
   color: #333;
+  margin-bottom: 20px;
 }
 
-/* Barcode Scanner Styles */
-#barcode-scanner {
-  width: 100%;
-  max-width: 640px;
-  height: 480px;
-  margin: 20px auto;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.result-container {
-  text-align: center;
-  margin-top: 20px;
-}
-
-#barcode-result {
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-}
-
-/* Button Styles */
-.btn {
-  display: inline-block;
-  background-color: #4caf50;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
+input,
+button {
   font-size: 16px;
-  margin: 10px;
-  cursor: pointer;
+  padding: 10px;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  transition: background-color 0.3s ease;
+  margin-right: 10px;
 }
 
-.btn:hover {
+button {
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
   background-color: #45a049;
 }
 
-.btn:focus {
-  outline: none;
+#barcode-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.barcode-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  background-color: white;
+}
+
+.barcode-item button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.barcode-item button:hover {
+  background-color: #d32f2f;
 }
