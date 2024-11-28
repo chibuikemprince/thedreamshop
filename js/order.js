@@ -111,6 +111,8 @@ $(document).ready(function () {
         method: "POST",
         data: $("#get_order_data").serialize(),
         success: function (data) {
+          localStorage.setItem("cartItems", JSON.stringify([]));
+
           if (data == "Order failed due to Insufficient stock") {
             alert("Order Failed due to Insufficient Stock");
             window.location.href = DOMAIN + "../new_order.php";
@@ -146,7 +148,7 @@ $(document).ready(function () {
     const orderDate = document.getElementById("order_date").value;
     const customerName = document.getElementById("cust_name").value;
 
-    console.log({ customerName });
+    //console.log({ customerName });
     const phone = document.getElementById("phone").value;
     const subTotal = document.getElementById("sub_total").value;
     const discount = document.getElementById("discount").value;
@@ -163,12 +165,14 @@ $(document).ready(function () {
       const cells = row.querySelectorAll("td");
       if (cells.length > 0) {
         invoiceItems.push({
-          no: cells[0].innerText,
-          itemName: getSelectedContent(cells[1].innerHTML),
-          totalQuantity: cells[2].innerText,
-          quantity: cells[3].innerText,
-          price: cells[4].innerText,
-          total: cells[5].innerText,
+          no: cells[0].children[0].innerText,
+          itemName:
+            cells[1].children[0].options[cells[1].children[0].selectedIndex]
+              .innerText,
+          totalQuantity: cells[2].children[0].value,
+          quantity: cells[3].children[0].value,
+          price: cells[4].children[0].value,
+          total: cells[5].children[0].innerText,
         });
       }
     });
@@ -247,7 +251,37 @@ $(document).ready(function () {
                     </tr>
                 </table>
             </div>
-           
+            <div class="invoice-items">
+                <h3>Order Items</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Item Name</th>
+                            <th>Total Quantity</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${invoiceItems
+                          .map(
+                            (item) => `
+                            <tr>
+                                <td>${item.no}</td>
+                                <td>${item.itemName}</td>
+                                <td>${item.totalQuantity}</td>
+                                <td>${item.quantity}</td>
+                                <td>${item.price}</td>
+                                <td>${item.total}</td>
+                            </tr>
+                        `
+                          )
+                          .join("")}
+                    </tbody>
+                </table>
+            </div>
             <div class="invoice-summary">
                 <h3>Summary</h3>
                 <table>

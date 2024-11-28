@@ -55,7 +55,7 @@ if (isset($_POST["brand_name"])) {
 // add product
 if (isset($_POST["added_date"]) and isset($_POST["product_name"])) {
 	$obj = new DBOperation();
-	$result = $obj->addproduct($_POST["select_cat"], $_POST["select_brand"], $_POST["product_name"], $_POST["product_price"], $_POST["product_qty"], $_POST["added_date"], $_POST["expiry_date"], $_POST["barcodeid"]);
+	$result = $obj->addproduct($_POST["select_cat"], $_POST["select_brand"], $_POST["product_name"], $_POST["product_price"], $_POST["product_qty"], $_POST["added_date"], $_POST["expiry_date"], trim($_POST["barcodeid"]));
 	echo $result;
 	exit();
 }
@@ -303,7 +303,7 @@ if (isset($_POST["manageCategory"])) {
 	<tr>
 		<td><b class="number">1</b></td>
 		<td>
-			<select name="pid[]" class="form-control form-control-sm pid" required id="first-order-1" >
+			<select name="pid[]" class="form-control form-control-sm pid order-name" required >
 				<option value="">Choose Product</option>
 				<?php
 					foreach ($rows as $row) {

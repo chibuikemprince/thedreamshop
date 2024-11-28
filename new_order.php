@@ -174,35 +174,61 @@ if (!isset($_SESSION["userid"])) {
 
 
 <script>
+
+function getUniqueCartItemsFromLocalStorage() {
+  const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  const uniqueCartItems = [...new Set(cartItems)];
+  return uniqueCartItems;
+}
+
+
  window.addEventListener('load', function() {
-  var selectElement = document.getElementById('first-order-1');
 
-  // Check if the current URL has any query parameters
-  if (window.location.search) {
-    // Create a URLSearchParams object from the query string
-    const urlParams = new URLSearchParams(window.location.search);
+const CartElements = getUniqueCartItemsFromLocalStorage()
 
-    if (urlParams.has('barcodeid')) {
-      const barcodeId = urlParams.get('barcodeid');
-      console.log('Barcode ID:', barcodeId);
+for(let i=1; i<CartElements.length; i++){
+    document.getElementById("add").click();
+}
 
-      for (let i = 0; i < selectElement.options.length; i++) {
-        // Check if the current option has the 'barcodeid' attribute equal to the one in the URL
-        if (selectElement.options[i].getAttribute('barcodeid') === barcodeId) {
-          console.log("Match found");
 
-          // Select the option
-          selectElement.options[i].selected = true;
-          $(".pid").trigger("change");
-          break;
-        }
-      }
-    } else {
-      console.log('The URL does not have a "barcodeid" parameter.');
+
+
+setTimeout(function(){
+
+    
+
+  var selectElements = document.querySelectorAll(".order-name")
+  console.log({l: selectElements.length})
+  var count = 0
+  selectElements.forEach(selectElement => {
+       const barcodeId = CartElements[count]
+      console.log('Barcode ID:', barcodeId, count);
+       count = count+1;
+
+  let matchFound = false;
+  for (let i = 0; i < selectElement.options.length; i++) {
+    if (selectElement.options[i].getAttribute('barcodeid') === barcodeId) {
+      console.log("Match found");
+      selectElement.options[i].selected = true;
+      $(".pid").trigger("change");
+      matchFound = true;
+      break;
     }
-  } else {
-    console.log('The current URL does not have any query parameters.');
   }
+
+  if (!matchFound) {
+    // Remove the select element from the table
+    selectElement.closest("tr").remove();
+  }
+
+
+     
+  });
+
+}, 500)
+  
+
+  
 });
     </script>
 </body>

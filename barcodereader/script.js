@@ -1,8 +1,9 @@
 var searching = false;
-function searchProductByBarcode(barcodeID) {
-  var DOMAIN = "http://localhost/TheDreamShop";
+var cartItems = [];
+var DOMAIN = "http://localhost/TheDreamShop";
 
-  if (searching == false) {
+function searchProductByBarcode(barcodeID) {
+  if (searching === false) {
     searching = true;
 
     fetch(DOMAIN + "/includes/searchbarcode.php", {
@@ -12,38 +13,26 @@ function searchProductByBarcode(barcodeID) {
       },
       body: new URLSearchParams({ barcodeID: barcodeID }),
     })
-      .then((response) => {
-        return response.text();
-        searching = false;
-      })
+      .then((response) => response.text())
       .then((data) => {
         searching = false;
 
-        console.log(data);
-
-        localStorage.setItem("barcodeid", barcodeID);
-
-        if (data == "Product not found") {
+        if (data === "Product not found") {
           alert("Product not found");
-          //window.location.assign(DOMAIN + "/dashboard.php?newproduct=true");
-        }
-
-        if (data == "found") {
+          window.location.assign(DOMAIN + "/dashboard.php?newproduct=true");
+        } else if (data === "found") {
           alert("Product found");
           window.location.assign(
-            DOMAIN + "/new_order.php?barcodeid=" + barcodeID
+            DOMAIN + "/new_order.php?barcodeID=" + barcodeID
           );
         }
       })
       .catch((error) => {
         searching = false;
-
         console.error("Error searching product:", error);
       });
   }
 }
-
-// Example usage
 
 window.addEventListener("load", function () {
   Quagga.init(
@@ -52,23 +41,32 @@ window.addEventListener("load", function () {
         name: "Live",
         type: "LiveStream",
         target: document.querySelector("#barcode-scanner"),
+        constraints: {
+          width: 640,
+          height: 480,
+          facingMode: "environment",
+        },
+
+        singleChannel: false, // true: only the red color-channel is read
       },
+
       decoder: {
         readers: [
           "code_128_reader",
           "ean_reader",
-          "ean_5_reader",
-          "ean_2_reader",
-          "ean_8_reader",
-          "code_39_reader",
-          "code_39_vin_reader",
-          "codabar_reader",
-          "upc_reader",
-          "upc_e_reader",
-          "i2of5_reader",
-          "2of5_reader",
-          "code_93_reader",
+          // "ean_5_reader",
+          // "ean_2_reader",
+          // "ean_8_reader",
+          // "code_39_reader",
+          // "code_39_vin_reader",
+          // "codabar_reader",
+          // "upc_reader",
+          // "upc_e_reader",
+          // "i2of5_reader",
+          // "2of5_reader",
+          // "code_93_reader",
         ],
+        multiple: false,
       },
     },
     function (err) {
@@ -84,7 +82,31 @@ window.addEventListener("load", function () {
   Quagga.onDetected(function (result) {
     document.getElementById("barcode-result").textContent =
       result.codeResult.code;
-    //console.log({ result });
-    searchProductByBarcode(result.codeResult.code);
+    console.log({ result: result.codeResult.code });
+    // searchProductByBarcode(result.codeResult.code);
   });
+
+  // Add event listeners for the buttons
+  document.getElementById("add-to-cart").addEventListener("click", addToCart);
+  document.getElementById("checkout").addEventListener("click", checkout);
 });
+
+function addToCart() {
+  var barcodeValue = document.getElementById("barcode-result").textContent;
+  cartItems.push(barcodeValue);
+  console.log("Added to cart:", cartItems);
+}
+
+function getUniqueCartItemsFromLocalStorage() {
+  const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  const uniqueCartItems = [...new Set(cartItems)];
+  return uniqueCartItems;
+}
+function checkout() {
+  localStorage.setItem(
+    "cartItems",
+    JSON.stringify([...getUniqueCartItemsFromLocalStorage(), ...cartItems])
+  );
+  // window.location.assign("order.html");
+  window.location.assign(DOMAIN + "/new_order.php");
+}
