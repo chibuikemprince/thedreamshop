@@ -1,0 +1,1 @@
+var DOMAIN = "http://localhost/TDS";
